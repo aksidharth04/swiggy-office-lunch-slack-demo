@@ -12,7 +12,7 @@ import {
 export const VIDEO_WIDTH = 1920;
 export const VIDEO_HEIGHT = 1080;
 export const VIDEO_FPS = 30;
-export const VIDEO_DURATION_FRAMES = 960;
+export const VIDEO_DURATION_FRAMES = 450;
 
 const palette = {
   paper: '#f7f3ea',
@@ -123,8 +123,8 @@ const Progress = ({frame}) => (
 
 const SceneTitle = () => {
   const frame = useCurrentFrame();
-  const opacity = fade(frame, 0, 24) * exitFade(frame, 72, 16);
-  const y = interpolate(frame, [0, 24], [22, 0], {
+  const opacity = fade(frame, 0, 14) * exitFade(frame, 34, 10);
+  const y = interpolate(frame, [0, 14], [18, 0], {
     easing: ease,
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
@@ -480,42 +480,41 @@ const SlackDemoScene = () => {
 
 const SlackTypeFlowScene = () => {
   const frame = useCurrentFrame();
-  const opacity = fade(frame, 0, 20) * exitFade(frame, 565, 24);
+  const opacity = fade(frame, 0, 14) * exitFade(frame, 386, 18);
   const command = '/swiggy-lunch for 12 250 by 13:15 veg';
   const typedCount = Math.floor(
-    interpolate(frame, [22, 128], [0, command.length], {
+    interpolate(frame, [10, 90], [0, command.length], {
       easing: Easing.bezier(0.45, 0, 0.55, 1),
       extrapolateLeft: 'clamp',
       extrapolateRight: 'clamp',
     }),
   );
   const typedCommand = command.slice(0, typedCount);
-  const cursorOn = Math.floor(frame / 12) % 2 === 0;
-  const sendPulse = interpolate(frame, [132, 146, 166], [0, 1, 0], {
+  const cursorOn = Math.floor(frame / 10) % 2 === 0;
+  const sendPulse = interpolate(frame, [92, 103, 118], [0, 1, 0], {
     easing: Easing.bezier(0.34, 1.56, 0.64, 1),
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
-  const commandOpacity = interpolate(frame, [168, 190], [1, 0], {
+  const commandOpacity = interpolate(frame, [120, 136], [1, 0], {
     easing: Easing.in(Easing.cubic),
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
-  const userMessageOpacity = fade(frame, 178, 22);
-  const appMessageOpacity = fade(frame, 206, 26);
-  const choiceOpacity = fade(frame, 254, 22);
-  const lockOpacity = fade(frame, 310, 22);
-  const approveOpacity = fade(frame, 358, 22);
-  const placedOpacity = fade(frame, 410, 24);
-  const proofLabelOpacity = fade(frame, 405, 28);
+  const userMessageOpacity = fade(frame, 132, 16);
+  const appMessageOpacity = fade(frame, 150, 20);
+  const choiceOpacity = fade(frame, 190, 18);
+  const lockOpacity = fade(frame, 235, 18);
+  const approveOpacity = fade(frame, 280, 18);
+  const placedOpacity = fade(frame, 330, 20);
   const status =
-    frame < 310 ? 'Collecting choices' : frame < 358 ? 'Locked' : frame < 410 ? 'Approved' : 'Placed';
-  const windowScale = interpolate(frame, [0, 160, 360, 565], [0.96, 1, 1.018, 1.01], {
+    frame < 235 ? 'Collecting choices' : frame < 280 ? 'Locked' : frame < 330 ? 'Approved' : 'Placed';
+  const windowScale = interpolate(frame, [0, 130, 290, 404], [0.96, 1, 1.018, 1.01], {
     easing: Easing.inOut(Easing.cubic),
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
-  const windowY = interpolate(frame, [0, 160, 360, 565], [18, 0, -12, -5], {
+  const windowY = interpolate(frame, [0, 130, 290, 404], [18, 0, -12, -5], {
     easing: Easing.inOut(Easing.cubic),
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
@@ -526,12 +525,12 @@ const SlackTypeFlowScene = () => {
   });
   const appCardLift = interpolate(appMessageOpacity, [0, 1], [18, 0]);
   const appCardScale = interpolate(appMessageOpacity, [0, 1], [0.985, 1]);
-  const providerSweep = interpolate(frame, [410, 466], [-1, 1], {
+  const providerSweep = interpolate(frame, [330, 375], [-1, 1], {
     easing: Easing.inOut(Easing.cubic),
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
-  const providerSweepOpacity = fade(frame, 410, 16) * exitFade(frame, 474, 18);
+  const providerSweepOpacity = fade(frame, 330, 14) * exitFade(frame, 382, 16);
 
   return (
     <Shell>
@@ -636,12 +635,12 @@ const SlackTypeFlowScene = () => {
                   </div>
                   <div style={{marginTop: 12, border: '1px solid rgba(255,255,255,0.12)', borderRadius: 18, backgroundColor: '#24262b', padding: '22px 24px', color: '#eee9e1'}}>
                     <div style={{display: 'flex', alignItems: 'center', gap: 14, marginBottom: 14}}>
-                      <div style={{width: 12, height: 12, borderRadius: 99, backgroundColor: frame < 410 ? '#d0a64f' : '#69a478'}} />
+                      <div style={{width: 12, height: 12, borderRadius: 99, backgroundColor: frame < 330 ? '#d0a64f' : '#69a478'}} />
                       <div style={{fontSize: 28, fontWeight: 780}}>Office lunch run</div>
                       <div style={{marginLeft: 'auto', fontFamily: font.mono, fontSize: 19, color: '#d8d2dc'}}>{status}</div>
                     </div>
                     <div style={{fontSize: 21, color: '#d8d2dc', marginBottom: 18}}>
-                      Budget: INR 250/person | Deadline: 13:15 | Participants: {frame < 254 ? '0' : '1'}/12 | Provider: Swiggy Mock
+                      Budget: INR 250/person | Deadline: 13:15 | Participants: {frame < 190 ? '0' : '1'}/12 | Provider: Swiggy Mock
                     </div>
                     <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20}}>
                       <div>
@@ -665,8 +664,8 @@ const SlackTypeFlowScene = () => {
                                 padding: '9px 12px',
                                 fontSize: 16,
                                 color: '#f5efe4',
-                                opacity: fade(frame, 238 + index * 7, 18),
-                                transform: `translateY(${interpolate(fade(frame, 238 + index * 7, 18), [0, 1], [8, 0])}px)`,
+                                opacity: fade(frame, 178 + index * 6, 14),
+                                transform: `translateY(${interpolate(fade(frame, 178 + index * 6, 14), [0, 1], [8, 0])}px)`,
                               }}
                             >
                               {label}
@@ -765,42 +764,6 @@ const SlackTypeFlowScene = () => {
           </div>
         </div>
       </div>
-      <div
-        style={{
-          position: 'absolute',
-          left: 118,
-          bottom: 62,
-          padding: '16px 22px',
-          borderRadius: 999,
-          backgroundColor: 'rgba(255,253,248,0.86)',
-          border: `1px solid ${palette.faint}`,
-          color: palette.ink,
-          fontFamily: font.mono,
-          fontSize: 22,
-          opacity,
-        }}
-      >
-        {frame < 190 ? 'The slash command is typed directly inside Slack.' : 'Choices, lock, approval, and placement happen in one Slack thread.'}
-      </div>
-      <div
-        style={{
-          position: 'absolute',
-          right: 118,
-          top: 830,
-          width: 430,
-          padding: '18px 22px',
-          borderRadius: 18,
-          backgroundColor: 'rgba(255,253,248,0.9)',
-          border: `1px solid ${palette.faint}`,
-          color: palette.ink,
-          fontSize: 24,
-          lineHeight: 1.28,
-          opacity: proofLabelOpacity,
-          transform: `translateY(${interpolate(proofLabelOpacity, [0, 1], [14, 0])}px)`,
-        }}
-      >
-        Final proof: mock order placed with a Swiggy Mock provider order id.
-      </div>
     </Shell>
   );
 };
@@ -867,17 +830,11 @@ export const SwiggyOfficeLunchDemo = () => {
 
   return (
     <AbsoluteFill>
-      <Sequence from={0} durationInFrames={90}>
+      <Sequence from={0} durationInFrames={45}>
         <SceneTitle />
       </Sequence>
-      <Sequence from={90} durationInFrames={120}>
-        <ArchitectureScene />
-      </Sequence>
-      <Sequence from={210} durationInFrames={600}>
+      <Sequence from={45} durationInFrames={405}>
         <SlackTypeFlowScene />
-      </Sequence>
-      <Sequence from={810} durationInFrames={150}>
-        <ClosingScene />
       </Sequence>
       <Progress frame={frame} />
     </AbsoluteFill>
