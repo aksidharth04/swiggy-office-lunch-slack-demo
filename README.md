@@ -10,7 +10,7 @@ A secure mock prototype for a native Slack office group ordering workflow built 
 
 ## Demo Video
 
-- [Watch the 32-second Slack workflow MP4](video/output/swiggy-office-lunch-openai-style.mp4)
+- [Watch or download the 32-second Slack workflow MP4](https://raw.githubusercontent.com/aksidharth04/swiggy-office-lunch-slack-demo/main/video/output/swiggy-office-lunch-openai-style.mp4)
 
 ## Pitch Demo
 
