@@ -1,0 +1,32 @@
+{
+  "display_information": {
+    "name": "Swiggy Office Lunch"
+  },
+  "features": {
+    "slash_commands": [
+      {
+        "command": "/swiggy-lunch",
+        "description": "Start a secure office group lunch order",
+        "should_escape": false,
+        "url": "https://YOUR_PUBLIC_TUNNEL/slack/commands",
+        "usage_hint": "for 12 ₹250 by 13:15 veg"
+      }
+    ]
+  },
+  "oauth_config": {
+    "scopes": {
+      "bot": [
+        "commands"
+      ]
+    }
+  },
+  "settings": {
+    "interactivity": {
+      "is_enabled": true,
+      "request_url": "https://YOUR_PUBLIC_TUNNEL/slack/interactions"
+    },
+    "org_deploy_enabled": false,
+    "socket_mode_enabled": false,
+    "token_rotation_enabled": false
+  }
+}

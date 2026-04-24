@@ -1,0 +1,15 @@
+{
+  "name": "swiggy-office-order-demo",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "slack:smoke": "node scripts/slack-smoke.js",
+    "start": "node src/server.js",
+    "test": "node --test",
+    "check": "node --check src/server.js && node --check src/slackIntegration.js && node --check public/app.js && node --check scripts/slack-smoke.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
