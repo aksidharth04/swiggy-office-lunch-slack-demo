@@ -1,0 +1,685 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Swiggy Office Lunch Demo Slides</title>
+  <style>
+    :root {
+      --ink: #1d1b18;
+      --muted: #6f6a61;
+      --paper: #f7f3ea;
+      --panel: #fffdf8;
+      --line: rgba(29, 27, 24, 0.14);
+      --accent: #bd6742;
+      --accent-soft: #f0d3c2;
+      --charcoal: #25221f;
+      --green: #55705d;
+      --slide-padding: clamp(1rem, 4vw, 4rem);
+      --title-size: clamp(2rem, 5.4vw, 5rem);
+      --h2-size: clamp(1.45rem, 3.7vw, 3.15rem);
+      --h3-size: clamp(1rem, 2.2vw, 1.45rem);
+      --body-size: clamp(0.82rem, 1.45vw, 1.08rem);
+      --small-size: clamp(0.68rem, 1vw, 0.86rem);
+      --mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+      --sans: "Satoshi", "Geist", "Aptos", ui-sans-serif, system-ui, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    html {
+      scroll-snap-type: y mandatory;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      letter-spacing: 0;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(29, 27, 24, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(29, 27, 24, 0.035) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(130deg, rgba(0, 0, 0, 0.95), transparent 72%);
+    }
+
+    .slide {
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
+      scroll-snap-align: start;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      isolation: isolate;
+    }
+
+    .slide-content {
+      flex: 1;
+      display: grid;
+      align-items: center;
+      max-height: 100%;
+      overflow: hidden;
+      padding: var(--slide-padding);
+      gap: clamp(0.75rem, 2vw, 2rem);
+    }
+
+    h1, h2, h3, p {
+      margin: 0;
+    }
+
+    h1 {
+      font-size: var(--title-size);
+      line-height: 0.92;
+      letter-spacing: -0.045em;
+      max-width: 11ch;
+      font-weight: 740;
+    }
+
+    h2 {
+      font-size: var(--h2-size);
+      line-height: 0.98;
+      letter-spacing: -0.04em;
+      max-width: 13ch;
+      font-weight: 720;
+    }
+
+    h3 {
+      font-size: var(--h3-size);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      font-weight: 680;
+    }
+
+    p, li {
+      font-size: var(--body-size);
+      line-height: 1.48;
+      color: var(--muted);
+      max-width: 62ch;
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      font-family: var(--mono);
+      font-size: var(--small-size);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .split {
+      grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+    }
+
+    .asym {
+      grid-template-columns: minmax(0, 0.68fr) minmax(320px, 1.32fr);
+    }
+
+    .stack {
+      display: grid;
+      gap: clamp(0.65rem, 1.7vw, 1.3rem);
+      align-content: center;
+    }
+
+    .stage {
+      background: rgba(255, 253, 248, 0.82);
+      border: 1px solid rgba(29, 27, 24, 0.12);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.78), 0 24px 50px -32px rgba(54, 43, 33, 0.48);
+      border-radius: clamp(1rem, 2vw, 1.9rem);
+      padding: clamp(1rem, 2vw, 1.8rem);
+      min-height: min(68vh, 680px);
+      display: grid;
+      align-content: center;
+      gap: clamp(0.7rem, 1.4vw, 1.1rem);
+      position: relative;
+    }
+
+    .stage.compact {
+      min-height: auto;
+    }
+
+    .ribbon {
+      position: absolute;
+      right: clamp(1rem, 2vw, 1.5rem);
+      top: clamp(1rem, 2vw, 1.5rem);
+      display: inline-grid;
+      grid-auto-flow: column;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.52rem 0.72rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--charcoal);
+      background: rgba(255, 253, 248, 0.78);
+      font-family: var(--mono);
+      font-size: var(--small-size);
+    }
+
+    .pulse {
+      width: 0.55rem;
+      height: 0.55rem;
+      border-radius: 999px;
+      background: var(--green);
+      animation: breathe 2.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+    }
+
+    .terminal {
+      border-radius: 1.25rem;
+      background: var(--charcoal);
+      color: #f8efe2;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: clamp(0.8rem, 1.8vw, 1.4rem);
+      font-family: var(--mono);
+      font-size: clamp(0.7rem, 1.25vw, 0.96rem);
+      line-height: 1.65;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    .terminal span {
+      color: #d89a78;
+    }
+
+    .phone {
+      width: min(100%, 380px);
+      margin-inline: auto;
+      border-radius: 2rem;
+      background: #fdfbf5;
+      border: 1px solid rgba(29, 27, 24, 0.16);
+      box-shadow: 0 30px 55px -38px rgba(29, 27, 24, 0.8);
+      overflow: hidden;
+      transform: rotate(-2deg);
+      animation: float 6s cubic-bezier(0.16, 1, 0.3, 1) infinite alternate;
+    }
+
+    .phone-head {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      padding: 1rem;
+      background: #332f2a;
+      color: #fbf4e8;
+      font-size: var(--small-size);
+      font-weight: 650;
+    }
+
+    .mark {
+      width: 1.4rem;
+      height: 1.4rem;
+      border-radius: 0.5rem;
+      background: var(--accent);
+      position: relative;
+    }
+
+    .message {
+      margin: 1rem;
+      padding: 0.9rem;
+      border-radius: 1rem;
+      border: 1px solid rgba(29, 27, 24, 0.1);
+      background: #ffffff;
+      display: grid;
+      gap: 0.7rem;
+    }
+
+    .message strong {
+      color: var(--ink);
+      font-size: clamp(0.9rem, 1.4vw, 1rem);
+    }
+
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .chip {
+      border: 1px solid rgba(29, 27, 24, 0.12);
+      border-radius: 999px;
+      padding: 0.42rem 0.6rem;
+      color: var(--charcoal);
+      background: #faf4eb;
+      font-size: var(--small-size);
+      font-family: var(--mono);
+    }
+
+    .button-stack {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.55rem;
+    }
+
+    .fake-button {
+      border-radius: 0.7rem;
+      background: var(--charcoal);
+      color: #fff8ec;
+      padding: 0.58rem;
+      text-align: center;
+      font-size: var(--small-size);
+      transform: translateZ(0);
+      transition: transform 0.26s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .fake-button:active {
+      transform: translateY(1px) scale(0.99);
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: clamp(0.45rem, 1vw, 0.9rem);
+      align-items: stretch;
+    }
+
+    .flow-card {
+      background: rgba(255, 253, 248, 0.86);
+      border: 1px solid var(--line);
+      border-radius: 1.2rem;
+      padding: clamp(0.72rem, 1.4vw, 1rem);
+      display: grid;
+      gap: 0.6rem;
+      min-height: 9rem;
+      animation: rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+      animation-delay: calc(var(--i) * 120ms);
+    }
+
+    .flow-card b {
+      color: var(--accent);
+      font-family: var(--mono);
+      font-size: var(--small-size);
+    }
+
+    .flow-card p {
+      font-size: clamp(0.72rem, 1vw, 0.9rem);
+      line-height: 1.38;
+    }
+
+    .line-list {
+      display: grid;
+      gap: 0.8rem;
+      padding: 0;
+      list-style: none;
+      margin: 0;
+    }
+
+    .line-list li {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.8rem;
+      align-items: baseline;
+      border-top: 1px solid var(--line);
+      padding-top: 0.78rem;
+    }
+
+    .line-list b {
+      color: var(--accent);
+      font-family: var(--mono);
+      font-size: var(--small-size);
+    }
+
+    .shot-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: clamp(0.75rem, 1.4vw, 1.2rem);
+    }
+
+    .shot {
+      border-top: 1px solid var(--line);
+      padding-block: clamp(0.65rem, 1.3vw, 0.9rem);
+      display: grid;
+      grid-template-columns: 4.5rem 1fr;
+      gap: 1rem;
+    }
+
+    .shot code {
+      color: var(--accent);
+      font-family: var(--mono);
+      font-size: var(--small-size);
+    }
+
+    .quote {
+      font-size: clamp(1.4rem, 3vw, 2.7rem);
+      line-height: 1.06;
+      letter-spacing: -0.04em;
+      color: var(--charcoal);
+      max-width: 16ch;
+      font-weight: 720;
+    }
+
+    .progress {
+      position: fixed;
+      left: clamp(1rem, 2vw, 1.5rem);
+      right: clamp(1rem, 2vw, 1.5rem);
+      bottom: clamp(0.75rem, 1.5vw, 1.1rem);
+      height: 2px;
+      background: rgba(29, 27, 24, 0.1);
+      z-index: 5;
+    }
+
+    .progress span {
+      display: block;
+      width: 0;
+      height: 100%;
+      background: var(--accent);
+      transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .counter {
+      position: fixed;
+      right: clamp(1rem, 2vw, 1.5rem);
+      bottom: clamp(1rem, 2.1vw, 1.8rem);
+      z-index: 6;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: var(--small-size);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .slide.active .reveal {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes breathe {
+      0%, 100% { transform: scale(0.82); opacity: 0.62; }
+      50% { transform: scale(1.26); opacity: 1; }
+    }
+
+    @keyframes float {
+      from { transform: rotate(-2deg) translate3d(0, 0, 0); }
+      to { transform: rotate(1deg) translate3d(0, -12px, 0); }
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 840px) {
+      .split, .asym, .shot-grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1, h2, .quote {
+        max-width: 100%;
+      }
+
+      .stage {
+        min-height: auto;
+      }
+
+      .flow {
+        grid-template-columns: 1fr;
+      }
+
+      .flow-card {
+        min-height: auto;
+      }
+
+      .phone {
+        width: min(100%, 330px);
+      }
+    }
+
+    @media (max-height: 700px) {
+      :root {
+        --slide-padding: clamp(0.75rem, 3vw, 2rem);
+        --title-size: clamp(1.6rem, 4.5vw, 3.4rem);
+        --h2-size: clamp(1.1rem, 3vw, 2.1rem);
+        --body-size: clamp(0.72rem, 1.2vw, 0.96rem);
+      }
+
+      .stage {
+        padding: 0.9rem;
+      }
+
+      .message {
+        margin: 0.75rem;
+      }
+    }
+
+    @media (max-height: 600px) {
+      .ribbon, .counter {
+        display: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+      }
+
+      html {
+        scroll-behavior: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="slide" aria-label="Title">
+      <div class="slide-content split">
+        <div class="stack reveal">
+          <p class="eyebrow">Swiggy Office Lunch</p>
+          <h1>Group lunch, inside Slack.</h1>
+          <p>One slash command opens a secure group order flow: budget, choices, approval, and mock placement without leaving the workspace.</p>
+        </div>
+        <div class="stage reveal" aria-label="Slack preview">
+          <div class="ribbon"><span class="pulse"></span>Live Slack flow</div>
+          <div class="phone">
+            <div class="phone-head"><span class="mark"></span>Swiggy Office Lunch</div>
+            <div class="message">
+              <strong>Koramangala office lunch run</strong>
+              <p>12 people, INR 250 budget, veg preference, deadline 13:15.</p>
+              <div class="chip-row">
+                <span class="chip">Ghee Rice Bowl</span>
+                <span class="chip">Paneer Wrap</span>
+                <span class="chip">Millet Thali</span>
+              </div>
+              <div class="button-stack">
+                <span class="fake-button">Choose meal</span>
+                <span class="fake-button">Lock cart</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" aria-label="Problem">
+      <div class="slide-content asym">
+        <div class="stack reveal">
+          <p class="eyebrow">Why it matters</p>
+          <h2>Office lunch is operational work disguised as chat.</h2>
+        </div>
+        <div class="stage compact reveal">
+          <ul class="line-list">
+            <li><b>01</b><span>Organizers chase meal choices across threads, DMs, and late replies.</span></li>
+            <li><b>02</b><span>Budgets and dietary rules are easy to state but hard to enforce manually.</span></li>
+            <li><b>03</b><span>Approval and placement need a clean handoff before the final order is sent.</span></li>
+            <li><b>04</b><span>The best place to coordinate is where the office already responds: Slack.</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" aria-label="Architecture">
+      <div class="slide-content">
+        <div class="stack reveal">
+          <p class="eyebrow">How the live demo works</p>
+          <h2>Slack reaches the local backend through ngrok.</h2>
+        </div>
+        <div class="flow reveal" aria-label="Demo flow">
+          <div class="flow-card" style="--i: 0"><b>Step 1</b><h3>Slash command</h3><p>Slack sends a signed request to the public ngrok command URL.</p></div>
+          <div class="flow-card" style="--i: 1"><b>Step 2</b><h3>Node backend</h3><p>The app verifies Slack signatures and creates the lunch run.</p></div>
+          <div class="flow-card" style="--i: 2"><b>Step 3</b><h3>Block Kit</h3><p>Participants choose meals through Slack buttons and menus.</p></div>
+          <div class="flow-card" style="--i: 3"><b>Step 4</b><h3>Organizer gates</h3><p>Only the organizer can lock, approve, and place the order.</p></div>
+          <div class="flow-card" style="--i: 4"><b>Step 5</b><h3>Mock placement</h3><p>The demo returns a provider order id without using private Swiggy APIs.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" aria-label="Setup">
+      <div class="slide-content split">
+        <div class="stack reveal">
+          <p class="eyebrow">Before recording</p>
+          <h2>Use real Slack, real signed requests, and a temporary public URL.</h2>
+          <p>The backend stays local. ngrok gives Slack a reachable HTTPS endpoint for installation and review.</p>
+        </div>
+        <div class="terminal reveal" aria-label="Commands">
+<pre>export SLACK_SIGNING_SECRET="real-slack-secret"
+npm start
+
+ngrok http 4173
+
+Command URL:
+<span>https://YOUR-NGROK.ngrok-free.app/slack/commands</span>
+
+Interactivity URL:
+<span>https://YOUR-NGROK.ngrok-free.app/slack/interactions</span></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" aria-label="Recording plan">
+      <div class="slide-content asym">
+        <div class="stack reveal">
+          <p class="eyebrow">Screen Studio plan</p>
+          <h2>Record it like a product launch, not a bug repro.</h2>
+          <p>Use window capture, smooth cursor, gentle zooms, and separate takes for the deck and Slack flow.</p>
+        </div>
+        <div class="stage compact reveal">
+          <div class="shot-grid">
+            <div>
+              <div class="shot"><code>00:00</code><p>Open with this deck: problem, architecture, and demo promise.</p></div>
+              <div class="shot"><code>00:25</code><p>Switch to Slack and run the slash command in the demo workspace.</p></div>
+              <div class="shot"><code>00:50</code><p>Show two meal selections, then lock and approve as organizer.</p></div>
+              <div class="shot"><code>01:20</code><p>Place the mock order and pause on the provider order id.</p></div>
+            </div>
+            <div class="quote">Keep every click visible, but never make the viewer wait.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" aria-label="Close">
+      <div class="slide-content split">
+        <div class="stack reveal">
+          <p class="eyebrow">Demo outcome</p>
+          <h2>A reviewable Slack-native order flow.</h2>
+          <p>Signed Slack requests, organizer-only controls, policy checks, audit-safe mock placement, and a clear adapter boundary for future Swiggy access.</p>
+        </div>
+        <div class="stage reveal">
+          <ul class="line-list">
+            <li><b>Security</b><span>Slack signature verification and replay-window checks.</span></li>
+            <li><b>Workflow</b><span>Command, choices, lock, approval, placement.</span></li>
+            <li><b>Boundary</b><span>Mock mode now, live adapter only after provider credentials exist.</span></li>
+            <li><b>Review</b><span>Slack can install and interact through the ngrok HTTPS URL.</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div class="progress" aria-hidden="true"><span id="progress"></span></div>
+  <div class="counter" id="counter" aria-live="polite">01 / 06</div>
+  <script>
+    class PresentationController {
+      constructor() {
+        this.slides = Array.from(document.querySelectorAll(".slide"));
+        this.progress = document.getElementById("progress");
+        this.counter = document.getElementById("counter");
+        this.index = 0;
+        this.wheelLocked = false;
+        this.touchStartY = 0;
+        this.observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                this.index = this.slides.indexOf(entry.target);
+                entry.target.classList.add("active");
+                this.update();
+              }
+            });
+          },
+          { threshold: 0.6 }
+        );
+        this.slides.forEach((slide) => this.observer.observe(slide));
+        this.bind();
+        this.goTo(0);
+      }
+
+      bind() {
+        window.addEventListener("keydown", (event) => {
+          if (["ArrowDown", "ArrowRight", "PageDown", " "].includes(event.key)) {
+            event.preventDefault();
+            this.goTo(this.index + 1);
+          }
+          if (["ArrowUp", "ArrowLeft", "PageUp"].includes(event.key)) {
+            event.preventDefault();
+            this.goTo(this.index - 1);
+          }
+          if (event.key === "Home") this.goTo(0);
+          if (event.key === "End") this.goTo(this.slides.length - 1);
+        });
+
+        window.addEventListener("wheel", (event) => {
+          if (this.wheelLocked || Math.abs(event.deltaY) < 20) return;
+          this.wheelLocked = true;
+          this.goTo(this.index + (event.deltaY > 0 ? 1 : -1));
+          window.setTimeout(() => {
+            this.wheelLocked = false;
+          }, 560);
+        }, { passive: true });
+
+        window.addEventListener("touchstart", (event) => {
+          this.touchStartY = event.touches[0].clientY;
+        }, { passive: true });
+
+        window.addEventListener("touchend", (event) => {
+          const delta = this.touchStartY - event.changedTouches[0].clientY;
+          if (Math.abs(delta) > 42) this.goTo(this.index + (delta > 0 ? 1 : -1));
+        }, { passive: true });
+      }
+
+      goTo(nextIndex) {
+        this.index = Math.max(0, Math.min(this.slides.length - 1, nextIndex));
+        this.slides[this.index].scrollIntoView({ behavior: "smooth", block: "start" });
+        this.slides[this.index].classList.add("active");
+        this.update();
+      }
+
+      update() {
+        const current = String(this.index + 1).padStart(2, "0");
+        const total = String(this.slides.length).padStart(2, "0");
+        this.counter.textContent = `${current} / ${total}`;
+        this.progress.style.width = `${((this.index + 1) / this.slides.length) * 100}%`;
+      }
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      new PresentationController();
+    });
+  </script>
+</body>
+</html>

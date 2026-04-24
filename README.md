@@ -8,6 +8,10 @@ A secure mock prototype for a native Slack office group ordering workflow built 
 - [Security policy](SECURITY.md)
 - [Privacy statement](PRIVACY.md)
 
+## Demo Video
+
+- [Watch the 32-second Slack workflow MP4](video/output/swiggy-office-lunch-openai-style.mp4)
+
 ## Pitch Demo
 
 ```bash
@@ -20,6 +24,12 @@ The primary surface is Slack:
 - Button/interactivity endpoint: `POST /slack/interactions`
 
 The browser page at `http://127.0.0.1:4173` is now only a debug console.
+
+For a polished Screen Studio recording with real Slack and ngrok, use:
+
+- [Demo recording runbook](docs/demo-recording-runbook.md)
+- [OpenAI-style video script](docs/openai-style-video-script.md)
+- [Informational demo slides](docs/demo-slides.html)
 
 For a local rehearsal, run the signed Slack smoke script in another terminal:
 

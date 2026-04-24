@@ -5,3 +5,7 @@ node_modules/
 .DS_Store
 .playwright-cli/
 .superpowers/
+public/video-assets/
+video/assets/
+video/output/.*.swp
+video/output/frame-*.png

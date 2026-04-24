@@ -7,9 +7,17 @@
     "slack:smoke": "node scripts/slack-smoke.js",
     "start": "node src/server.js",
     "test": "node --test",
-    "check": "node --check src/server.js && node --check src/slackIntegration.js && node --check public/app.js && node --check scripts/slack-smoke.js"
+    "check": "node --check src/server.js && node --check src/slackIntegration.js && node --check public/app.js && node --check scripts/slack-smoke.js",
+    "video:render": "remotion render video/src/index.jsx SwiggyOfficeLunchDemo video/output/swiggy-office-lunch-openai-style.mp4",
+    "video:still": "remotion still video/src/index.jsx SwiggyOfficeLunchDemo video/output/frame-30.png --frame=30 --scale=0.25"
   },
   "engines": {
     "node": ">=20"
+  },
+  "devDependencies": {
+    "@remotion/cli": "^4.0.451",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "remotion": "^4.0.451"
   }
 }
