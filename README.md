@@ -2,6 +2,12 @@
 
 A secure mock prototype for a native Slack office group ordering workflow built for the Swiggy Builders Club idea.
 
+## Application Materials
+
+- [Application packet](APPLICATION.md)
+- [Security policy](SECURITY.md)
+- [Privacy statement](PRIVACY.md)
+
 ## Pitch Demo
 
 ```bash
