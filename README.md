@@ -4,7 +4,7 @@ A Slack-native prototype for coordinating office lunch orders with Swiggy Food.
 
 ## Demo
 
-[Watch or download the 15-second Slack workflow MP4](https://raw.githubusercontent.com/aksidharth04/swiggy-office-lunch-slack-demo/main/video/output/swiggy-office-lunch-openai-style.mp4)
+[Watch or download the 15-second Slack workflow MP4](https://raw.githubusercontent.com/aksidharth04/swiggy-office-lunch-slack-demo/main/video/output/swiggy-office-lunch-slack-demo.mp4)
 
 ## Overview
 
